@@ -1,0 +1,37 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: post-service
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/postdb
+    username: root
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  config:
+    import: optional:configserver:http://config-server:8888
+
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 3
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+
+
+
+

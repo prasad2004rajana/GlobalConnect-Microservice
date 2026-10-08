@@ -1,0 +1,11 @@
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\client\UserClient.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\client\UserClientFallbackFactory.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\controller\PostController.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\dto\PostRequest.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\dto\PostResponse.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\dto\UserResponse.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\entity\PostEntity.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\mapper\PostMapper.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\PostServiceApplication.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\repository\PostRepository.java
+D:\globalconnect-microservice\post-service\post-service\src\main\java\post_service\post_service\service\PostService.java

@@ -1,0 +1,4 @@
+com\globalconnect\api_gateway\ApiGatewayApplication.class
+com\globalconnect\api_gateway\security\SecurityConfig.class
+com\globalconnect\api_gateway\security\JwtAuthFilter.class
+com\globalconnect\api_gateway\security\JwtService.class

@@ -1,0 +1,13 @@
+post_service\post_service\dto\PostResponse.class
+post_service\post_service\PostServiceApplication.class
+post_service\post_service\repository\PostRepository.class
+post_service\post_service\dto\UserResponse.class
+post_service\post_service\client\UserClientFallbackFactory$1.class
+post_service\post_service\mapper\PostMapper.class
+post_service\post_service\entity\PostEntity.class
+post_service\post_service\mapper\PostMapperImpl.class
+post_service\post_service\service\PostService.class
+post_service\post_service\client\UserClientFallbackFactory.class
+post_service\post_service\client\UserClient.class
+post_service\post_service\controller\PostController.class
+post_service\post_service\dto\PostRequest.class

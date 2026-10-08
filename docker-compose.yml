@@ -1,0 +1,50 @@
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+    
+
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+
+  discovery-server:
+    build: ./discovery-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+      - discovery-server
+      - config-server
+    environment:
+      DB_PASSWORD: root123
+      JWT_SECRET: ${JWT_SECRET}
+
+  post-service:
+    build: ./post-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+      - discovery-server
+      - config-server
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      - discovery-server
+      - config-server
