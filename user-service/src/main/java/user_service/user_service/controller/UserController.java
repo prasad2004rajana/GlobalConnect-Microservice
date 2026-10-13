@@ -5,12 +5,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import user_service.user_service.dto.LoginRequest;
-import user_service.user_service.dto.LoginResponse;
-import user_service.user_service.dto.UserRequest;
-import user_service.user_service.dto.UserResponse;
+import user_service.user_service.dto.*;
 import user_service.user_service.service.LoginService;
 import user_service.user_service.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -36,5 +35,18 @@ public class UserController {
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest loginRequest){
         LoginResponse response=loginService.login(loginRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/users/batch")
+    public ResponseEntity<List<UserSummaryResponse>> getUsers(@RequestParam("ids") List<Long> ids) {
+        return ResponseEntity.ok(userService.getUserSummaries(ids));
+    }
+    @GetMapping("/users/search")
+    public ResponseEntity<List<UserSummaryResponse>> search(@RequestParam("q") String q) {
+        return ResponseEntity.ok(userService.searchUsers(q));
+    }
+    @GetMapping("/users/recent")
+    public ResponseEntity<List<UserSummaryResponse>> recentUsers() {
+        return ResponseEntity.ok(userService.getRecentUsers());
     }
 }

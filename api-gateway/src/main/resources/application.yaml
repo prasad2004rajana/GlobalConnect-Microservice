@@ -18,10 +18,17 @@ spring:
               uri: lb://post-service
               predicates:
                 - path=/api/posts/**
+
+            - id: follow-service-route
+              uri: lb://follow-service
+              predicates:
+                - path=/api/follows/**
+
+
 eureka:
   client:
     service-url:
-      defaultZone: http://Discovery-server:8761/eureka
+      defaultZone: http://discovery-server:8761/eureka/
 
 
 jwt:

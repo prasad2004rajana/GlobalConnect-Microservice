@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+import static org.bouncycastle.asn1.x500.style.RFC4519Style.uid;
+
 @Service
 public class JwtService {
 
@@ -24,9 +26,10 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateToken(String email){
+    public String generateToken(String email, Long uid){
         return Jwts.builder()
                 .subject(email)
+                .claim("uid", uid)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getKey())

@@ -1,5 +1,6 @@
 package com.globalconnect.api_gateway.security;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -21,23 +24,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        String userId = null;
         String authHeader = request.getHeader("Authorization");
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            Optional<Claims> claims = jwtService.parse(authHeader.substring(7));
+            if (claims.isPresent()) {
+                Long uid = jwtService.extractUserId(claims.get());
+                if (uid != null) {
+                    userId = String.valueOf(uid);
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            claims.get().getSubject(), null, Collections.emptyList());
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
         }
 
-        String token = authHeader.substring(7); // strip "Bearer "
-        String email = jwtService.extractEmail(token);
-
-        if (email != null && jwtService.isTokenValid(token, email)) {
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(email, null, java.util.Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-        }
-
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(new UserHeaderRequestWrapper(request, userId), response);
     }
-
 }

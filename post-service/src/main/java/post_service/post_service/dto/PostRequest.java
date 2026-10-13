@@ -1,8 +1,7 @@
 package post_service.post_service.dto;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +12,6 @@ import lombok.Setter;
 public class PostRequest {
 
     @NotBlank
+    @Size(max = 1000, message = "post must be at most 1000 characters")
     private String content;
-
-    @NotNull
-    private Long userId;
-
 }

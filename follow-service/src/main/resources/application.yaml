@@ -1,0 +1,38 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: follow-service
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/followdb?createDatabaseIfNotExist=true
+    username: root
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  config:
+    import: optional:configserver:http://config-server:8888
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://discovery-server:8761/eureka}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        ignoreExceptions:
+          - feign.FeignException$NotFound
+        slidingWindowSize: 5
+        minimumNumberOfCalls: 3
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s

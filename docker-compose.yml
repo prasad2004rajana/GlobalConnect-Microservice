@@ -9,7 +9,7 @@ services:
   config-server:
     build: ./config-server
     ports:
-      - "8888:8888"
+      - "8889:8888"
 
   discovery-server:
     build: ./discovery-server
@@ -20,8 +20,6 @@ services:
 
   user-service:
     build: ./user-service
-    ports:
-      - "8081:8081"
     depends_on:
       - mysql
       - discovery-server
@@ -32,12 +30,12 @@ services:
 
   post-service:
     build: ./post-service
-    ports:
-      - "8082:8082"
     depends_on:
       - mysql
       - discovery-server
       - config-server
+    environment:
+      DB_PASSWORD: root123
 
   api-gateway:
     build: ./api-gateway
@@ -48,3 +46,15 @@ services:
     depends_on:
       - discovery-server
       - config-server
+
+  follow-service:
+    build: ./follow-service
+    depends_on:
+      - mysql
+      - discovery-server
+      - config-server
+    environment:
+      DB_PASSWORD: root123
+    restart: on-failure
+  
+    

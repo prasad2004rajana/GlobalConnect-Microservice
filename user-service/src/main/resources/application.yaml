@@ -5,7 +5,7 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:mysql://mysql:3306/userdb
+    url: jdbc:mysql://mysql:3306/userdb?createDatabaseIfNotExist=true
     username: root
     password: ${DB_PASSWORD}
 
@@ -19,3 +19,8 @@ spring:
 jwt:
   secret: ${JWT_SECRET}
   expiration: 86400000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://Discovery-server:8761/eureka
